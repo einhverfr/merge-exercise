@@ -5,6 +5,8 @@ a file and checks to see if we get a valid response.
 
 import csv
 from urllib import request
+import http
+import urllib
 from bs4 import BeautifulSoup
 
 def status_of(hostname):
@@ -18,7 +20,7 @@ def status_of(hostname):
         bsparse = BeautifulSoup(urlstatus["page"], 'html.parser')
         urlstatus["status"] = bool(bsparse.body)
         urlstatus["exception"] = ''
-    except Exception as e:
+    except (http.client.RemoteDisconnected, urllib.error.URLError) as e:
         urlstatus["status"] = False
         urlstatus["exception"] = e
     return urlstatus
