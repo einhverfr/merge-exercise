@@ -18,7 +18,7 @@ def status_of(hostname):
         bsparse = BeautifulSoup(urlstatus["page"], 'html.parser')
         urlstatus["status"] = bool(bsparse.body)
         urlstatus["exception"] = ''
-    except Exception as e:
+    except socket.timeout as e:
         urlstatus["status"] = False
         urlstatus["exception"] = e
     return urlstatus
